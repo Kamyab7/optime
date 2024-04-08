@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
 
-namespace Application.Missions.Queries;
+namespace Application.Missions.Queries.GetMissionsWithPagination;
 
 public record GetMissionsWithPaginationQuery : IRequest<PaginatedList<MissionDto>>
 {

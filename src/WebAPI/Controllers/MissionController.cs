@@ -1,6 +1,6 @@
 ﻿using Application.Common.Models;
 using Application.Missions.Commands.CreateMission;
-using Application.Missions.Queries;
+using Application.Missions.Queries.GetMissionsWithPagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
