@@ -26,8 +26,6 @@ public class MissionDto
 
     public MissionStatus MissionStatus { get; set; }
 
-    public string? DriverId { get; set; }
-
     public Driver Driver { get; set; }
 
     private class Mapping : Profile
