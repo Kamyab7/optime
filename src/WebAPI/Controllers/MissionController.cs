@@ -26,5 +26,4 @@ public class MissionController : ControllerBase
     {
         return await _sender.Send(query);
     }
-
 }

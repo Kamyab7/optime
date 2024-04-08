@@ -1,4 +1,6 @@
-﻿using Application.Drivers.Commands.CreateDriver;
+﻿using Application.Common.Models;
+using Application.Drivers.Commands.CreateDriver;
+using Application.Drivers.Queries.GetDriverWithPagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,5 +19,11 @@ public class DriverController : ControllerBase
     public async Task<string> CreateDriver(CreateDriverCommand command)
     {
         return await _sender.Send(command);
+    }
+
+    [HttpGet("/drivers")]
+    public async Task<PaginatedList<DriverDto>> GetDriversWithPagination([AsParameters] GetDriverWithPaginationQuery query)
+    {
+        return await _sender.Send(query);
     }
 }
