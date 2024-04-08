@@ -12,7 +12,7 @@ namespace Infrastructure.Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Driver",
+                name: "Drivers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -21,11 +21,11 @@ namespace Infrastructure.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Driver", x => x.Id);
+                    table.PrimaryKey("PK_Drivers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Mission",
+                name: "Missions",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -36,17 +36,17 @@ namespace Infrastructure.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mission", x => x.Id);
+                    table.PrimaryKey("PK_Missions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Mission_Driver_DriverId",
+                        name: "FK_Missions_Drivers_DriverId",
                         column: x => x.DriverId,
-                        principalTable: "Driver",
+                        principalTable: "Drivers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mission_DriverId",
-                table: "Mission",
+                name: "IX_Missions_DriverId",
+                table: "Missions",
                 column: "DriverId");
         }
 
@@ -54,10 +54,10 @@ namespace Infrastructure.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Mission");
+                name: "Missions");
 
             migrationBuilder.DropTable(
-                name: "Driver");
+                name: "Drivers");
         }
     }
 }

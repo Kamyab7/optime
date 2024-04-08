@@ -18,7 +18,7 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString, x => x.UseNetTopologySuite());
         });
 
-        services.AddSingleton<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<ApplicationDbContextInitializer>();
 

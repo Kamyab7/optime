@@ -12,7 +12,7 @@ using NetTopologySuite.Geometries;
 namespace Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240408162545_InitDb")]
+    [Migration("20240408165408_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Driver");
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Domain.Mission", b =>
@@ -68,7 +68,7 @@ namespace Infrastructure.Database.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Mission");
+                    b.ToTable("Missions");
                 });
 
             modelBuilder.Entity("Domain.Mission", b =>

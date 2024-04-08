@@ -39,7 +39,7 @@ namespace Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Driver");
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Domain.Mission", b =>
@@ -65,7 +65,7 @@ namespace Infrastructure.Database.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Mission");
+                    b.ToTable("Missions");
                 });
 
             modelBuilder.Entity("Domain.Mission", b =>
