@@ -1,4 +1,6 @@
-﻿using Application.Missions.Commands.CreateMission;
+﻿using Application.Common.Models;
+using Application.Missions.Commands.CreateMission;
+using Application.Missions.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,4 +20,11 @@ public class MissionController : ControllerBase
     {
         return await _sender.Send(command);
     }
+
+    [HttpGet("/missions")]
+    public async Task<PaginatedList<MissionDto>> GetMissionsWithPagination([AsParameters] GetMissionsWithPaginationQuery query)
+    {
+        return await _sender.Send(query);
+    }
+
 }
