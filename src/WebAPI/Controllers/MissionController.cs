@@ -1,4 +1,5 @@
 ﻿using Application.Common.Models;
+using Application.Missions.Commands.AssignMission;
 using Application.Missions.Commands.CreateMission;
 using Application.Missions.Queries.GetMissionsWithPagination;
 using MediatR;
@@ -17,6 +18,12 @@ public class MissionController : ControllerBase
 
     [HttpPost("/missions/create")]
     public async Task<string> CreateDriver(CreateMissionCommand command)
+    {
+        return await _sender.Send(command);
+    }
+
+    [HttpPost("/missions/assign")]
+    public async Task<Unit> AssignMissionToDriver(AssignMissionCommand command)
     {
         return await _sender.Send(command);
     }

@@ -16,7 +16,7 @@ public class Mission
 
     public Driver Driver { get; set; }
 
-    public Mission(Point destination,Point source)
+    public Mission(Point destination, Point source)
     {
         Id = Guid.NewGuid().ToString();
 
@@ -25,5 +25,12 @@ public class Mission
         Source = source;
 
         MissionStatus = MissionStatus.Pending;
+    }
+
+    public void AssignToDriver(Driver driver)
+    {
+        DriverId = driver.Id;
+
+        MissionStatus = MissionStatus.InProgress;
     }
 }
