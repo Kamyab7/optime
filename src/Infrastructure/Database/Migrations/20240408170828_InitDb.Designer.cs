@@ -12,7 +12,7 @@ using NetTopologySuite.Geometries;
 namespace Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240408165408_InitDb")]
+    [Migration("20240408170828_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Infrastructure.Database.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Point>("Distination")
+                    b.Property<Point>("Destination")
                         .IsRequired()
                         .HasColumnType("geography");
 

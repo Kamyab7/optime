@@ -47,7 +47,7 @@ namespace Infrastructure.Database.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Point>("Distination")
+                    b.Property<Point>("Destination")
                         .IsRequired()
                         .HasColumnType("geography");
 

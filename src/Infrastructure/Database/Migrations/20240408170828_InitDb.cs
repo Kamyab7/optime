@@ -29,7 +29,7 @@ namespace Infrastructure.Database.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Distination = table.Column<Point>(type: "geography", nullable: false),
+                    Destination = table.Column<Point>(type: "geography", nullable: false),
                     Source = table.Column<Point>(type: "geography", nullable: false),
                     MissionStatus = table.Column<int>(type: "int", nullable: false),
                     DriverId = table.Column<string>(type: "nvarchar(450)", nullable: true)

@@ -8,7 +8,7 @@ public class MissionConfiguration : IEntityTypeConfiguration<Mission>
 {
     public void Configure(EntityTypeBuilder<Mission> builder)
     {
-        builder.Property(m => m.Distination)
+        builder.Property(m => m.Destination)
             .IsRequired();
 
         builder.Property(m => m.Source)

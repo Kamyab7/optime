@@ -6,7 +6,7 @@ public class Mission
 {
     public string Id { get; set; }
 
-    public Point Distination { get; set; }
+    public Point Destination { get; set; }
 
     public Point Source { get; set; }
 
@@ -15,4 +15,15 @@ public class Mission
     public string? DriverId { get; set; }
 
     public Driver Driver { get; set; }
+
+    public Mission(Point destination,Point source)
+    {
+        Id = Guid.NewGuid().ToString();
+
+        Destination = destination;
+
+        Source = source;
+
+        MissionStatus = MissionStatus.Pending;
+    }
 }

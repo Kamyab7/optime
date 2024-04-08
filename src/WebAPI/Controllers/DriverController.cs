@@ -13,7 +13,7 @@ public class DriverController : ControllerBase
         _sender = sender;
     }
 
-    [HttpPost("/driver/create")]
+    [HttpPost("/drivers/create")]
     public async Task<string> CreateDriver(CreateDriverCommand command)
     {
         return await _sender.Send(command);
