@@ -37,7 +37,6 @@ public class MissionDto
                    .ForMember(dest => dest.Destination, opt => opt.MapFrom(src => MapToPointDto(src.Destination)))
                    .ForMember(dest => dest.Source, opt => opt.MapFrom(src => MapToPointDto(src.Source)))
                    .ForMember(dest => dest.MissionStatus, opt => opt.MapFrom(src => src.MissionStatus))
-                   .ForMember(dest => dest.DriverId, opt => opt.MapFrom(src => src.DriverId))
                    .ForMember(dest => dest.Driver, opt => opt.MapFrom(src => src.Driver));
         }
     }
