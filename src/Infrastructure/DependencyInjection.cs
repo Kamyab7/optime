@@ -3,11 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Application.Common.Interfaces;
 using Hangfire;
+using Infrastructure.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
+
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -23,11 +25,14 @@ public static class DependencyInjection
 
         services.AddScoped<ApplicationDbContextInitializer>();
 
+        services.AddScoped<AutoAssignerService>();
+
         services.AddHangfire(configuration => configuration
            .UseInMemoryStorage());
 
-        // Add Hangfire server
         services.AddHangfireServer();
+
+        services.AddScoped<IBus, FakeBus>();
 
         return services;
     }
