@@ -1,5 +1,7 @@
 using Hangfire;
+using Microsoft.OpenApi.Models;
 using WebAPI;
+using WebAPI.ActionFilters;
 using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +14,18 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "OptimeAI API", Version = "v1" });
+    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    {
+        Description = "API Key authentication using header",
+        Name = "X-API-KEY",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
+    c.OperationFilter<ApiKeyRequirementOperationFilter>();
+});
 
 var app = builder.Build();
 
