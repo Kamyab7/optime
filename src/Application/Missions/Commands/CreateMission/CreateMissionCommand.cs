@@ -44,6 +44,8 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
     public async Task<string> Handle(CreateMissionCommand request, CancellationToken cancellationToken)
     {
+        // TODO: Assign mission here
+
         var destinationPoint = new Point(request.DestinationLongitude, request.DestinationLatitude) { SRID = 4326 }; // Assuming WGS 84 coordinate system
 
         var sourcePoint = new Point(request.SourceLongitude, request.SourceLatitude) { SRID = 4326 }; // Assuming WGS 84 coordinate system
