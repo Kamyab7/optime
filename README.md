@@ -11,6 +11,8 @@ For more details about Clean Architecture, CQRS, DDD, and Vertical Slice, please
 
 :warning: **Note:** Since this project is an interview assignment, I've intentionally avoided some complexities. For example, authentication is implemented using API keys, and there is no hashing mechanism. The admin API key is `adminkey`.
 
+:warning: **Note:** While I intended to write tests for this project, due to time constraints, testing has not been implemented yet.
+
 ## Project Initialization
 
 Optime project was initiated on [insert_date_here]. When the project started, the `ApplicationDbContextInitializer` class was created to be responsible for creating the database and seeding some mock driver data. Additionally, it registers some cronjobs for mocking the mechanisms of the whole system. These jobs can be seen and managed in the Hangfire URL: `/hangfire`.
