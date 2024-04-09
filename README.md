@@ -2,7 +2,7 @@
 
 Optime is a repository created for a technical interview assignment. It implements the Clean Architecture, Command Query Responsibility Segregation (CQRS), Domain-Driven Design (DDD), and Vertical Slice patterns.
 
-For more details about Clean Architecture, CQRS, DDD, and Vertical Slice, please refer to the following links:
+For more details about Clean Architecture, CQRS, DDD, and Vertical Slice.
 
 - [Clean Architecture](insert_link_to_clean_architecture_here)
 - [CQRS](insert_link_to_cqrs_here)
