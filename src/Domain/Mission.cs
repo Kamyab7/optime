@@ -33,4 +33,9 @@ public class Mission
 
         MissionStatus = MissionStatus.InProgress;
     }
+
+    public void CompleteMission()
+    {
+        MissionStatus = MissionStatus.Done;
+    }
 }

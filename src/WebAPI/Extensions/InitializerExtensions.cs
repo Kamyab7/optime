@@ -15,5 +15,7 @@ public static class InitializerExtensions
         await initializer.SeedAsync();
 
         initializer.AddMockMissionDataCronJob();
+
+        initializer.AddMockDriverArrivedCronJob();
     }
 }

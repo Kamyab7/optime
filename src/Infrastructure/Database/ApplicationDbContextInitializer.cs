@@ -4,6 +4,7 @@ using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
+using System;
 
 namespace Infrastructure.Database;
 
@@ -12,6 +13,7 @@ public class ApplicationDbContextInitializer
     private readonly ILogger<ApplicationDbContextInitializer> _logger;
     private readonly ApplicationDbContext _context;
     private readonly IRecurringJobManager _recurringJobManager;
+    private readonly Random _random = Random.Shared;
 
     public ApplicationDbContextInitializer(ILogger<ApplicationDbContextInitializer> logger, ApplicationDbContext context, IRecurringJobManager recurringJobManager)
     {
@@ -66,7 +68,8 @@ public class ApplicationDbContextInitializer
     public async Task AddMockMissionData()
     {
         var missionFaker = new Faker<Mission>()
-           .CustomInstantiator(f => {
+           .CustomInstantiator(f =>
+           {
                // Generate latitude and longitude within valid ranges
                double sourceLatitude = f.Random.Double(-90, 90);
                double sourceLongitude = f.Random.Double(-180, 180);
@@ -90,5 +93,29 @@ public class ApplicationDbContextInitializer
         _logger.LogInformation("20 Mock mission data added.");
     }
 
-    public void AddMockMissionDataCronJob()=> _recurringJobManager.AddOrUpdate("MissionMockData", () => AddMockMissionData(), "*/30 * * * * *");
+    public async Task AddMockArrivedData()
+    {
+        var randomDriver = _context.Drivers.Include(d => d.Missions)
+            .Where(d => d.Missions!.Any(m => m.MissionStatus == MissionStatus.InProgress))
+            .OrderBy(x => _random.Next())
+            .FirstOrDefault();
+
+        if (randomDriver == null)
+            return;
+
+        var mission = randomDriver.Missions!
+            .Where(m => m.MissionStatus == MissionStatus.InProgress)
+            .FirstOrDefault();
+
+        if (mission == null) 
+            return;
+
+        mission.CompleteMission();
+
+        await _context.SaveChangesAsync();
+    }
+
+    public void AddMockMissionDataCronJob() => _recurringJobManager.AddOrUpdate("MissionMockData", () => AddMockMissionData(), "*/20 * * * * *");
+
+    public void AddMockDriverArrivedCronJob() => _recurringJobManager.AddOrUpdate("ArrivedMockData", () => AddMockArrivedData(), "*/10 * * * * *");
 }
