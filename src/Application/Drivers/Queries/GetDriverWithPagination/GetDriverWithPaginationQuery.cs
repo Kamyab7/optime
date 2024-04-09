@@ -23,11 +23,14 @@ public class DriverDto
 
     public string LastName { get; set; }
 
+    public bool HasInProgressMission { get; set; }
+
     private class Mapping : Profile
     {
         public Mapping()
         {
-            CreateMap<Driver, DriverDto>();
+            CreateMap<Driver, DriverDto>()
+                .ForMember(dest => dest.HasInProgressMission, opt => opt.MapFrom(src => src.Missions.Any(m => m.MissionStatus == MissionStatus.InProgress)));
         }
     }
 }
@@ -51,6 +54,7 @@ public class GetDriverWithPaginationQueryHandler : IRequestHandler<GetDriverWith
         // TODO: Add driver status prop 
         return await _context.Drivers
             .AsNoTracking()
+            .Include(d => d.Missions)
             .ProjectTo<DriverDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
