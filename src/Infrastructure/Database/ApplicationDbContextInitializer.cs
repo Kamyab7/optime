@@ -86,6 +86,8 @@ public class ApplicationDbContextInitializer
         await _context.Missions.AddRangeAsync(missions);
 
         await _context.SaveChangesAsync();
+
+        _logger.LogInformation("20 Mock mission data added.");
     }
 
     public void AddMockMissionDataCronJob()=> _recurringJobManager.AddOrUpdate("MissionMockData", () => AddMockMissionData(), "*/30 * * * * *");
