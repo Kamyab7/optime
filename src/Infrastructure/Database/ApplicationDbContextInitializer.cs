@@ -1,7 +1,9 @@
 ﻿using Bogus;
 using Domain;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NetTopologySuite.Geometries;
 
 namespace Infrastructure.Database;
 
@@ -9,11 +11,13 @@ public class ApplicationDbContextInitializer
 {
     private readonly ILogger<ApplicationDbContextInitializer> _logger;
     private readonly ApplicationDbContext _context;
+    private readonly IRecurringJobManager _recurringJobManager;
 
-    public ApplicationDbContextInitializer(ILogger<ApplicationDbContextInitializer> logger, ApplicationDbContext context)
+    public ApplicationDbContextInitializer(ILogger<ApplicationDbContextInitializer> logger, ApplicationDbContext context, IRecurringJobManager recurringJobManager)
     {
         _logger = logger;
         _context = context;
+        _recurringJobManager = recurringJobManager;
     }
 
     public async Task InitializeAsync()
@@ -58,4 +62,20 @@ public class ApplicationDbContextInitializer
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task AddMockMissionData()
+    {
+        var missionFaker = new Faker<Mission>()
+           .CustomInstantiator(f => new Mission(new Point(f.Random.Double(-90, 90), f.Random.Double(-180, 180)),
+                                                new Point(f.Random.Double(-90, 90), f.Random.Double(-180, 180))));
+
+        // Generate 20 instances of mock data
+        List<Mission> missions = missionFaker.Generate(20);
+
+        await _context.Missions.AddRangeAsync(missions);
+
+        await _context.SaveChangesAsync();
+    }
+
+    public void AddMockMissionDataCronJob()=> _recurringJobManager.AddOrUpdate("MissionMockData", () => AddMockMissionData(), "*/30 * * * * *");
 }

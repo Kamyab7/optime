@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Application.Common.Interfaces;
+using Hangfire;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +22,12 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<ApplicationDbContextInitializer>();
+
+        services.AddHangfire(configuration => configuration
+           .UseInMemoryStorage());
+
+        // Add Hangfire server
+        services.AddHangfireServer();
 
         return services;
     }

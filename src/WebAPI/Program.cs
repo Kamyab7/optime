@@ -1,3 +1,4 @@
+using Hangfire;
 using WebAPI;
 using WebAPI.Extensions;
 
@@ -24,6 +25,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseHangfireDashboard();
+
+app.UseHangfireServer();
 
 app.UseAuthorization();
 

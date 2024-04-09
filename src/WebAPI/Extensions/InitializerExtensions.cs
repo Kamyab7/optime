@@ -13,5 +13,7 @@ public static class InitializerExtensions
         await initializer.InitializeAsync();
 
         await initializer.SeedAsync();
+
+        initializer.AddMockMissionDataCronJob();
     }
 }
