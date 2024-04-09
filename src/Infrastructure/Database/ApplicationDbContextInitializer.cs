@@ -66,8 +66,19 @@ public class ApplicationDbContextInitializer
     public async Task AddMockMissionData()
     {
         var missionFaker = new Faker<Mission>()
-           .CustomInstantiator(f => new Mission(new Point(f.Random.Double(-90, 90), f.Random.Double(-180, 180)),
-                                                new Point(f.Random.Double(-90, 90), f.Random.Double(-180, 180))));
+           .CustomInstantiator(f => {
+               // Generate latitude and longitude within valid ranges
+               double sourceLatitude = f.Random.Double(-90, 90);
+               double sourceLongitude = f.Random.Double(-180, 180);
+               double destinationLatitude = f.Random.Double(-90, 90);
+               double destinationLongitude = f.Random.Double(-180, 180);
+
+               // Create valid geometry points with SRID 4326
+               var sourcePoint = new Point(sourceLongitude, sourceLatitude) { SRID = 4326 };
+               var destinationPoint = new Point(destinationLongitude, destinationLatitude) { SRID = 4326 };
+
+               return new Mission(destinationPoint, sourcePoint);
+           });
 
         // Generate 20 instances of mock data
         List<Mission> missions = missionFaker.Generate(20);
