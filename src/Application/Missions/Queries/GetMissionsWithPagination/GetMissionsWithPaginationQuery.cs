@@ -49,12 +49,6 @@ public class MissionDto
             Longitude = point.X
         };
     }
-
-    public class PointDto
-    {
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-    }
 }
 
 public class GetMissionsWithPaginationQueryHandler : IRequestHandler<GetMissionsWithPaginationQuery, PaginatedList<MissionDto>>

@@ -25,6 +25,8 @@ public class DriverDto
 
     public bool HasInProgressMission { get; set; }
 
+    public string ApiKey { get; set; }
+
     private class Mapping : Profile
     {
         public Mapping()

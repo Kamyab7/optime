@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
-using Application.Common.Interfaces;
-using Domain;
 
 namespace WebAPI.ActionFilters;
 
@@ -19,12 +18,13 @@ public class DriverKeyRequired : ActionFilterAttribute
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyName, out StringValues extractedApiKey))
+        if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyName, out StringValues extractedApiKeys))
         {
             context.Result = new UnauthorizedResult();
             return;
         }
-
+        // Convert StringValues to string
+        string extractedApiKey = extractedApiKeys.FirstOrDefault();
         var driver = _context.Drivers.FirstOrDefault(x => x.ApiKey == extractedApiKey);
 
         if (driver == null)
