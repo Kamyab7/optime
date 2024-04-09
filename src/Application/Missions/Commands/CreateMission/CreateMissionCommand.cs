@@ -1,7 +1,9 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
 
 namespace Application.Missions.Commands.CreateMission;
@@ -13,6 +15,8 @@ public record CreateMissionCommand : IRequest<string>
 
     public double SourceLatitude { get; init; }
     public double SourceLongitude { get; init; }
+
+    public string DriverId { get; init; } = null!;
 }
 
 public class CreateMissionCommandValidator : AbstractValidator<CreateMissionCommand>
@@ -44,13 +48,26 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
     public async Task<string> Handle(CreateMissionCommand request, CancellationToken cancellationToken)
     {
-        // TODO: Assign mission here
-
         var destinationPoint = new Point(request.DestinationLongitude, request.DestinationLatitude) { SRID = 4326 }; // Assuming WGS 84 coordinate system
 
         var sourcePoint = new Point(request.SourceLongitude, request.SourceLatitude) { SRID = 4326 }; // Assuming WGS 84 coordinate system
 
         var mission = new Mission(destinationPoint, sourcePoint);
+
+        if (!String.IsNullOrEmpty(request.DriverId))
+        {
+            var driver = await _context.Drivers.FindAsync(new object[] { request.DriverId }, cancellationToken);
+
+            if (driver == null)
+                throw new NotFoundException();
+
+            var hasInProgressMission = await _context.Missions.AnyAsync(x => x.MissionStatus == Domain.MissionStatus.InProgress && x.DriverId == driver.Id);
+
+            if (hasInProgressMission)
+                throw new ArgumentException("driver already has a InProgress mission.");
+
+            mission.AssignToDriver(driver);
+        }
 
         _context.Missions.Add(mission);
 
