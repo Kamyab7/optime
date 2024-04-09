@@ -30,4 +30,5 @@ The `AddMockDriverArrivedCronJob` is responsible for mocking driver arrivals.
 - [FluentValidation](https://fluentvalidation.net/): A popular .NET library for building strongly-typed validation rules
 - [Hangfire](https://www.hangfire.io/): An easy way to perform background processing in .NET and .NET Core applications
 - [AutoMapper](https://automapper.org/): A convention-based object-to-object mapper
+- [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite): A .NET library for spatial data types and operations
 
