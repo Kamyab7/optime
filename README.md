@@ -15,7 +15,7 @@ For more details about Clean Architecture, CQRS, DDD, and Vertical Slice.
 
 ## Project Initialization
 
-Optime project was initiated on [insert_date_here]. When the project started, the `ApplicationDbContextInitializer` class was created to be responsible for creating the database and seeding some mock driver data. Additionally, it registers some cronjobs for mocking the mechanisms of the whole system. These jobs can be seen and managed in the Hangfire URL: `/hangfire`.
+When the project started, the `ApplicationDbContextInitializer` class was created to be responsible for creating the database and seeding some mock driver data. Additionally, it registers some cronjobs for mocking the mechanisms of the whole system. These jobs can be seen and managed in the Hangfire URL: `/hangfire`.
 
 Twenty missions will be seeded every twenty seconds.
 
