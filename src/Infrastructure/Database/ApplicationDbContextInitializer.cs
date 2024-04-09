@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bogus;
+using Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Database;
@@ -42,6 +44,18 @@ public class ApplicationDbContextInitializer
 
     public async Task TrySeedAsync()
     {
-       
+        if (_context.Drivers.Any())
+            return;
+
+        var driverFaker = new Faker<Driver>()
+                    .CustomInstantiator(f => new Driver(f.Person.FirstName, f.Person.LastName))
+                    .RuleFor(d => d.Missions, f => null); // Missions will be null for mock data
+
+        // Generate 75 instances of mock data
+        List<Driver> drivers = driverFaker.Generate(75);
+
+        _context.Drivers.AddRange(drivers);
+
+        await _context.SaveChangesAsync();
     }
 }
