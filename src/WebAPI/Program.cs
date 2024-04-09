@@ -1,8 +1,10 @@
+using Application.Common.Interfaces;
 using Hangfire;
 using Microsoft.OpenApi.Models;
 using WebAPI;
 using WebAPI.ActionFilters;
 using WebAPI.Extensions;
+using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
