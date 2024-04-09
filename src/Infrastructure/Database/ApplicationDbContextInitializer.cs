@@ -117,5 +117,5 @@ public class ApplicationDbContextInitializer
 
     public void AddMockMissionDataCronJob() => _recurringJobManager.AddOrUpdate("MissionMockData", () => AddMockMissionData(), "*/20 * * * * *");
 
-    public void AddMockDriverArrivedCronJob() => _recurringJobManager.AddOrUpdate("ArrivedMockData", () => AddMockArrivedData(), "*/10 * * * * *");
+    public void AddMockDriverArrivedCronJob() => _recurringJobManager.AddOrUpdate("ArrivedMockData", () => AddMockArrivedData(), "*/2 * * * * *");
 }

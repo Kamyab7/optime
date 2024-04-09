@@ -14,7 +14,7 @@ public class Mission
 
     public string? DriverId { get; set; }
 
-    public Driver Driver { get; set; }
+    public Driver Driver { get; set; } = null!;
 
     public Mission(Point destination, Point source)
     {
