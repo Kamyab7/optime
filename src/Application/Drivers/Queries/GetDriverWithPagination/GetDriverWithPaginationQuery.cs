@@ -50,8 +50,6 @@ public class GetDriverWithPaginationQueryHandler : IRequestHandler<GetDriverWith
 
     public async Task<PaginatedList<DriverDto>> Handle(GetDriverWithPaginationQuery request, CancellationToken cancellationToken)
     {
-
-        // TODO: Add driver status prop 
         return await _context.Drivers
             .AsNoTracking()
             .Include(d => d.Missions)
