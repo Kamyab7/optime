@@ -6,3 +6,17 @@ services:
     build:
       context: .
       dockerfile: src/WebAPI/Dockerfile
+    ports:
+      - "8080:80"  # Map container port 80 to host port 8080
+    depends_on:
+      - db
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=db;Database=OptimeDb;User=sa;Password=YourStrong@Password;MultipleActiveResultSets=true"
+
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    ports:
+      - "1433:1433" # Map container port 1433 to host port 1433
+    environment:
+      SA_PASSWORD: "YourStrong@Password"
+      ACCEPT_EULA: "Y"
