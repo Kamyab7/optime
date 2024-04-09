@@ -38,11 +38,11 @@ public class AutoAssignerService
         var availableDrivers =  await _context.Drivers
             .Include(d => d.Missions)
             .Where(d => !d.Missions!.Any(m => m.MissionStatus == MissionStatus.InProgress))
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         var availableMissions = await _context.Missions
             .Where(m => m.MissionStatus == MissionStatus.Pending)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         foreach (var driver in availableDrivers)
         {
